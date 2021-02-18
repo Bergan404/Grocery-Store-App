@@ -19,13 +19,20 @@ export const removeFromCart = (id) => {
 
 export default function
 cartReducer(state = {}, action) {
+    const newState = {...state}
     switch(action.type) {
         case ADD_CART:
-            return {...state, [action.produceId]: {id: action.produceId , count: 1}}
+            const add = newState[action.produceId]
+            console.log(add)
+            if (add){
+                add.count++
+            }else {
+                newState[action.produceId] = { id: action.produceId, count: 1}
+            }
+            return newState
         case REMOVE_CART:
             const newCart = {...state}
-            delete newCart.[action.produceId]
-            console.log(newCart)
+            delete newCart[action.produceId]
             return newCart
         default:
             return state;
